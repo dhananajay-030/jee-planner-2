@@ -2,7 +2,7 @@
   "name": "JEE 2026 — Final 10-Day War Plan",
   "short_name": "JEE 2026",
   "description": "10-Day JEE Advanced 2026 Study Planner with daily schedules, task tracking, and countdown timer",
-  "start_url": "./jee2026_planner.html",
+  "start_url": "/jee-planner-2/",
   "display": "standalone",
   "background_color": "#04040a",
   "theme_color": "#04040a",
