@@ -606,6 +606,166 @@
     display: none;
   }
   #offline-badge.show { display: block; }
+
+  /* ── TAB NAVIGATION ── */
+  .tab-nav {
+    display: flex; gap: 4px;
+    background: rgba(4,8,18,0.88);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 5px;
+    margin-bottom: 32px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: sticky; top: 8px; z-index: 50;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+  .tab-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    padding: 10px 6px; border-radius: 10px;
+    border: none; background: none; color: var(--text-dim);
+    cursor: pointer; transition: all 0.25s; white-space: nowrap;
+  }
+  .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+  .tab-btn.active {
+    background: linear-gradient(135deg, rgba(0,200,255,0.15), rgba(191,95,255,0.12));
+    color: #fff; border: 1px solid rgba(0,200,255,0.3);
+    box-shadow: 0 0 20px rgba(0,200,255,0.1);
+  }
+  .tab-icon { font-size: 16px; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── TIMER TAB ── */
+  .stopwatch-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 20px 24px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+  .stopwatch-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,200,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .sw-label { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); margin-bottom:10px; }
+  .sw-task-name { font-family:'Space Mono',monospace; font-size:12px; color:var(--physics); margin-bottom:8px; min-height:18px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding:0 20px; }
+
+  .sw-ring-wrap { position:relative; width:190px; height:190px; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; }
+  .sw-ring-svg { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); }
+  .sw-ring-bg { fill:none; stroke:rgba(255,255,255,0.06); }
+  .sw-ring-fill { fill:none; stroke:var(--organic); stroke-linecap:round; transition:stroke-dashoffset 0.08s linear, stroke 0.3s; }
+  .sw-ring-inner { text-align:center; }
+  .sw-display {
+    font-family:'Orbitron',monospace; font-size:clamp(28px,7vw,44px);
+    font-weight:900; letter-spacing:2px; color:#fff; line-height:1;
+    text-shadow:0 0 30px rgba(0,200,255,0.25); transition:color 0.3s;
+  }
+  .sw-display.running { color:var(--organic); text-shadow:0 0 30px rgba(0,255,136,0.35); }
+  .sw-display.paused  { color:var(--inorganic); text-shadow:0 0 30px rgba(255,184,0,0.3); }
+  .sw-ms { font-family:'Orbitron',monospace; font-size:15px; color:var(--text-dim); letter-spacing:2px; margin-top:4px; }
+
+  .sw-controls { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
+  .sw-btn {
+    font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:1.5px;
+    padding:11px 18px; border-radius:10px; border:none; cursor:pointer;
+    transition:all 0.2s; display:flex; align-items:center; gap:6px;
+  }
+  .sw-btn-start { background:linear-gradient(135deg,rgba(0,255,136,0.2),rgba(0,200,255,0.12)); border:1px solid rgba(0,255,136,0.35); color:var(--organic); }
+  .sw-btn-start:hover { background:linear-gradient(135deg,rgba(0,255,136,0.3),rgba(0,200,255,0.2)); transform:scale(1.04); }
+  .sw-btn-pause { background:linear-gradient(135deg,rgba(255,184,0,0.18),rgba(255,140,0,0.1)); border:1px solid rgba(255,184,0,0.35); color:var(--inorganic); }
+  .sw-btn-pause:hover { transform:scale(1.04); }
+  .sw-btn-stop { background:linear-gradient(135deg,rgba(255,77,109,0.18),rgba(200,0,60,0.1)); border:1px solid rgba(255,77,109,0.35); color:var(--warn); }
+  .sw-btn-stop:hover { transform:scale(1.04); }
+  .sw-btn-lap { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:var(--text-dim); }
+  .sw-btn-lap:hover { color:#fff; transform:scale(1.04); }
+  .sw-btn:disabled { opacity:0.3; cursor:not-allowed; transform:none !important; }
+
+  .timer-task-select {
+    background:var(--card-bg); border:1px solid var(--border); border-radius:12px;
+    padding:18px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); margin-bottom:16px;
+  }
+  .tts-label { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); margin-bottom:10px; }
+  .tts-select {
+    width:100%; background:rgba(4,8,20,0.85); border:1px solid rgba(0,200,255,0.2);
+    border-radius:8px; padding:10px 36px 10px 12px; color:#fff;
+    font-family:'Inter',sans-serif; font-size:13px; outline:none; cursor:pointer;
+    appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300c8ff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 12px center;
+  }
+  .tts-select:focus { border-color:rgba(0,200,255,0.4); box-shadow:0 0 0 2px rgba(0,200,255,0.08); }
+  .tts-select option { background:#0a0f1e; color:#fff; }
+  .timer-manual { display:flex; gap:8px; margin-top:10px; }
+  .timer-note-input {
+    flex:1; background:rgba(4,8,20,0.8); border:1px solid var(--border);
+    border-radius:8px; padding:9px 12px; color:#fff;
+    font-family:'Inter',sans-serif; font-size:12px; outline:none;
+  }
+  .timer-note-input:focus { border-color:rgba(191,95,255,0.4); }
+  .timer-note-input::placeholder { color:var(--text-dim); }
+  .timer-add-btn {
+    background:rgba(191,95,255,0.15); border:1px solid rgba(191,95,255,0.3);
+    border-radius:8px; padding:9px 14px; color:var(--maths);
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:1px; font-weight:700;
+    cursor:pointer; white-space:nowrap; transition:all 0.2s;
+  }
+  .timer-add-btn:hover { background:rgba(191,95,255,0.25); transform:scale(1.03); }
+
+  /* subject totals */
+  .subj-totals {
+    background:var(--card-bg); border:1px solid var(--border); border-radius:12px;
+    padding:18px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); margin-bottom:16px;
+  }
+  .st-header { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); margin-bottom:14px; }
+  .st-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .st-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .st-label { font-size:12px; color:var(--text); flex:1; }
+  .st-bar-wrap { flex:2; height:5px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
+  .st-bar-fill { height:100%; border-radius:3px; transition:width 0.6s cubic-bezier(0.23,1,0.32,1); min-width:0; }
+  .st-time { font-family:'Orbitron',monospace; font-size:11px; color:#fff; min-width:58px; text-align:right; }
+
+  /* session log */
+  .session-log {
+    background:var(--card-bg); border:1px solid var(--border); border-radius:12px;
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); margin-bottom:16px; overflow:hidden;
+  }
+  .session-log-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border); }
+  .session-log-title { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-dim); }
+  .log-clear-btn { font-family:'Space Mono',monospace; font-size:10px; background:none; border:1px solid rgba(255,77,109,0.25); color:rgba(255,77,109,0.6); border-radius:6px; padding:4px 10px; cursor:pointer; transition:all 0.2s; letter-spacing:1px; }
+  .log-clear-btn:hover { color:var(--warn); border-color:var(--warn); }
+  .session-list { max-height:280px; overflow-y:auto; }
+  .session-list::-webkit-scrollbar { width:3px; }
+  .session-list::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:2px; }
+  .session-item { display:flex; align-items:center; gap:12px; padding:11px 18px; border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
+  .session-item:hover { background:rgba(255,255,255,0.02); }
+  .session-item:last-child { border-bottom:none; }
+  .session-color { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .session-info { flex:1; min-width:0; }
+  .session-name { font-size:13px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:2px; }
+  .session-meta { font-size:10px; color:var(--text-dim); font-family:'Space Mono',monospace; }
+  .session-dur { font-family:'Orbitron',monospace; font-size:13px; font-weight:700; color:#fff; flex-shrink:0; }
+  .session-empty { text-align:center; padding:36px 20px; font-family:'Space Mono',monospace; font-size:11px; color:var(--text-dim); }
+
+  /* laps */
+  .laps-section { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:16px 18px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); margin-bottom:16px; }
+  .laps-header { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); margin-bottom:10px; }
+  .lap-item { display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-family:'Space Mono',monospace; font-size:11px; }
+  .lap-item:last-child { border-bottom:none; }
+  .lap-num { color:var(--text-dim); min-width:26px; }
+  .lap-name { color:var(--text); flex:1; font-size:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .lap-time { color:var(--physics); }
+  .lap-delta { color:var(--text-dim); font-size:9px; margin-left:4px; }
+  .laps-empty { color:var(--text-dim); font-family:'Space Mono',monospace; font-size:11px; text-align:center; padding:12px 0; }
+
   @media (max-width: 600px) {
     .day-num { font-size: 20px; }
     .task-time { min-width: 80px; font-size: 9px; }
@@ -897,23 +1057,24 @@
 
   <!-- COUNTDOWN -->
   <div class="countdown-wrap">
-    <div class="count-unit" id="cu-days">
-      <div class="count-num" id="cd-days">--</div>
-      <div class="count-label">DAYS</div>
-    </div>
-    <div class="count-unit" id="cu-hrs">
-      <div class="count-num" id="cd-hrs">--</div>
-      <div class="count-label">HOURS</div>
-    </div>
-    <div class="count-unit" id="cu-min">
-      <div class="count-num" id="cd-min">--</div>
-      <div class="count-label">MINUTES</div>
-    </div>
-    <div class="count-unit" id="cu-sec">
-      <div class="count-num" id="cd-sec">--</div>
-      <div class="count-label">SECONDS</div>
-    </div>
+    <div class="count-unit" id="cu-days"><div class="count-num" id="cd-days">--</div><div class="count-label">DAYS</div></div>
+    <div class="count-unit" id="cu-hrs"><div class="count-num" id="cd-hrs">--</div><div class="count-label">HOURS</div></div>
+    <div class="count-unit" id="cu-min"><div class="count-num" id="cd-min">--</div><div class="count-label">MINUTES</div></div>
+    <div class="count-unit" id="cu-sec"><div class="count-num" id="cd-sec">--</div><div class="count-label">SECONDS</div></div>
   </div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('planner')">
+      <span class="tab-icon">📅</span><span>PLANNER</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('timer')">
+      <span class="tab-icon">⏱️</span><span>TIMER</span>
+    </button>
+  </div>
+
+  <!-- ══ PLANNER TAB ══ -->
+  <div class="tab-pane active" id="tab-planner">
 
   <!-- STATS -->
   <div class="stats-row">
@@ -943,31 +1104,85 @@
     </div>
   </div>
 
-  <!-- SUBJECT LEGEND -->
-  <div class="subject-legend">
-    <div class="subj-pill"><div class="subj-dot" style="background:var(--physics)"></div>Physics</div>
-    <div class="subj-pill"><div class="subj-dot" style="background:var(--maths)"></div>Maths</div>
-    <div class="subj-pill"><div class="subj-dot" style="background:var(--organic)"></div>Organic Chem</div>
-    <div class="subj-pill"><div class="subj-dot" style="background:var(--inorganic)"></div>Inorganic</div>
-    <div class="subj-pill"><div class="subj-dot" style="background:var(--physical)"></div>Physical Chem</div>
-    <div class="subj-pill"><div class="subj-dot" style="background:var(--warn)"></div>⚠️ Weak Chapter</div>
-  </div>
-
-  <!-- OVERALL PROGRESS -->
-  <div class="progress-section">
-    <div class="overall-label">Mission Progress</div>
-    <div class="overall-bar-wrap">
-      <div class="overall-bar-fill" id="overall-fill"></div>
-    </div>
-    <div class="overall-pct" id="overall-pct">0% <span>completed</span></div>
-  </div>
-
   <!-- DAYS -->
   <div class="section-hdr">Daily Schedule</div>
   <div class="days-grid" id="days-grid"></div>
 
-</div>
+  </div><!-- end tab-planner -->
 
+  <!-- ══ TIMER TAB ══ -->
+  <div class="tab-pane" id="tab-timer">
+
+    <!-- STOPWATCH CARD -->
+    <div class="stopwatch-card">
+      <div class="sw-label">Study Stopwatch</div>
+      <div class="sw-task-name" id="sw-task-name">No task selected</div>
+      <div class="sw-ring-wrap">
+        <svg class="sw-ring-svg" viewBox="0 0 190 190">
+          <circle class="sw-ring-bg" cx="95" cy="95" r="82" stroke-width="6"/>
+          <circle class="sw-ring-fill" id="sw-ring" cx="95" cy="95" r="82" stroke-width="6"
+            stroke-dasharray="515.2" stroke-dashoffset="515.2"/>
+        </svg>
+        <div class="sw-ring-inner">
+          <div class="sw-display" id="sw-display">00:00:00</div>
+          <div class="sw-ms" id="sw-ms">.00</div>
+        </div>
+      </div>
+      <div class="sw-controls">
+        <button class="sw-btn sw-btn-start" id="sw-start" onclick="swStart()">▶ START</button>
+        <button class="sw-btn sw-btn-pause" id="sw-pause" onclick="swPause()" disabled>⏸ PAUSE</button>
+        <button class="sw-btn sw-btn-lap"   id="sw-lap"   onclick="swLap()"   disabled>🏁 LAP</button>
+        <button class="sw-btn sw-btn-stop"  id="sw-stop"  onclick="swStop()"  disabled>⏹ SAVE &amp; STOP</button>
+      </div>
+    </div>
+
+    <!-- TASK SELECTOR -->
+    <div class="timer-task-select">
+      <div class="tts-label">Select Task to Time</div>
+      <select class="tts-select" id="timer-task-sel" onchange="updateTimerTask()">
+        <option value="">— Free Study Session —</option>
+      </select>
+      <div class="timer-manual">
+        <input class="timer-note-input" id="timer-custom-note" placeholder="Or type a custom note (e.g. 'Integration doubts')…" maxlength="80"/>
+        <button class="timer-add-btn" onclick="applyCustomNote()">SET</button>
+      </div>
+    </div>
+
+    <!-- SUBJECT TOTALS -->
+    <div class="subj-totals">
+      <div class="st-header">Time Studied by Subject — Today</div>
+      <div class="st-row"><span class="st-dot" style="background:var(--physics)"></span><span class="st-label">Physics</span><div class="st-bar-wrap"><div class="st-bar-fill" id="stb-physics" style="background:var(--physics);width:0%"></div></div><span class="st-time" id="stt-physics">0:00</span></div>
+      <div class="st-row"><span class="st-dot" style="background:var(--maths)"></span><span class="st-label">Maths</span><div class="st-bar-wrap"><div class="st-bar-fill" id="stb-maths" style="background:var(--maths);width:0%"></div></div><span class="st-time" id="stt-maths">0:00</span></div>
+      <div class="st-row"><span class="st-dot" style="background:var(--organic)"></span><span class="st-label">Organic Chem</span><div class="st-bar-wrap"><div class="st-bar-fill" id="stb-organic" style="background:var(--organic);width:0%"></div></div><span class="st-time" id="stt-organic">0:00</span></div>
+      <div class="st-row"><span class="st-dot" style="background:var(--inorganic)"></span><span class="st-label">Inorganic</span><div class="st-bar-wrap"><div class="st-bar-fill" id="stb-inorganic" style="background:var(--inorganic);width:0%"></div></div><span class="st-time" id="stt-inorganic">0:00</span></div>
+      <div class="st-row"><span class="st-dot" style="background:var(--physical)"></span><span class="st-label">Physical Chem</span><div class="st-bar-wrap"><div class="st-bar-fill" id="stb-physical" style="background:var(--physical);width:0%"></div></div><span class="st-time" id="stt-physical">0:00</span></div>
+      <div class="st-row"><span class="st-dot" style="background:var(--text-dim)"></span><span class="st-label">Other / Free</span><div class="st-bar-wrap"><div class="st-bar-fill" id="stb-other" style="background:var(--text-dim);width:0%"></div></div><span class="st-time" id="stt-other">0:00</span></div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim)">TOTAL TODAY</span>
+        <span style="font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:#fff" id="stt-total">0:00:00</span>
+      </div>
+    </div>
+
+    <!-- LAPS -->
+    <div class="laps-section">
+      <div class="laps-header">Lap / Split Times</div>
+      <div id="laps-list"><div class="laps-empty">No laps recorded yet</div></div>
+    </div>
+
+    <!-- SESSION LOG -->
+    <div class="session-log">
+      <div class="session-log-header">
+        <div class="session-log-title">Session History</div>
+        <button class="log-clear-btn" onclick="clearSessions()">CLEAR ALL</button>
+      </div>
+      <div class="session-list" id="session-list">
+        <div class="session-empty">No sessions recorded yet.<br>Start the timer and stop it to log a session.</div>
+      </div>
+    </div>
+
+  </div><!-- end tab-timer -->
+
+</div><!-- end shell -->
 <footer>
   <div>BUILT FOR THE GRIND · <span>JEE 2026</span> · YOU GOT THIS 🚀</div>
 </footer>
@@ -1407,6 +1622,256 @@ DAYS.forEach((day, di)=>{
     }
   });
 });
+
+// ── TAB SWITCHING ─────────────────────────────────────────────────────
+function switchTab(name){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(name==='timer'){ populateTaskSelector(); renderSessions(); renderSubjectTotals(); }
+}
+
+// ── POPULATE TASK SELECTOR ───────────────────────────────────────────
+function populateTaskSelector(){
+  const sel = document.getElementById('timer-task-sel');
+  sel.innerHTML = '<option value="">— Free Study Session —</option>';
+  DAYS.forEach((day, di)=>{
+    const grp = document.createElement('optgroup');
+    grp.label = `Day ${di+1} — ${day.date}`;
+    let added = false;
+    day.tasks.forEach((task, ti)=>{
+      if(task.tags.includes('break')) return;
+      const opt = document.createElement('option');
+      opt.value = JSON.stringify({title: task.title, tags: task.tags, di, ti});
+      opt.textContent = task.title + (task.sub ? ' — ' + task.sub.split('·')[0].trim() : '');
+      grp.appendChild(opt);
+      added = true;
+    });
+    if(added) sel.appendChild(grp);
+  });
+}
+
+// ── TIMER STATE ───────────────────────────────────────────────────────
+const TIMER_KEY = 'jee2026_timer';
+let timerSessions = [];
+try{ timerSessions = JSON.parse(localStorage.getItem(TIMER_KEY)) || []; }catch(e){}
+
+let swElapsed = 0;       // ms accumulated
+let swStart2 = null;     // Date.now() when last started
+let swRunning = false;
+let swRafId   = null;
+let swCurrentTask = { title: 'Free Study Session', tags: ['other'] };
+let laps = [];
+let lastLapAt = 0;
+
+const swDisp  = document.getElementById('sw-display');
+const swMs    = document.getElementById('sw-ms');
+const swRing  = document.getElementById('sw-ring');
+const swTaskN = document.getElementById('sw-task-name');
+const RING_C  = 2 * Math.PI * 82; // circumference for r=82
+
+function formatTime(ms, showMs=false){
+  const h = Math.floor(ms/3600000);
+  const m = Math.floor((ms%3600000)/60000);
+  const s = Math.floor((ms%60000)/1000);
+  const cs = Math.floor((ms%1000)/10);
+  const base = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return showMs ? { base, cs: String(cs).padStart(2,'0') } : base;
+}
+
+function formatShort(ms){
+  const h = Math.floor(ms/3600000);
+  const m = Math.floor((ms%3600000)/60000);
+  const s = Math.floor((ms%60000)/1000);
+  if(h>0) return `${h}h ${String(m).padStart(2,'0')}m`;
+  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function swTick(){
+  const now = Date.now();
+  const total = swElapsed + (now - swStart2);
+  const {base, cs} = formatTime(total, true);
+  swDisp.textContent = base;
+  swMs.textContent   = '.' + cs;
+  // ring — rotates every 60s
+  const sec60 = (total / 60000) % 1;
+  swRing.style.strokeDashoffset = RING_C * (1 - sec60);
+  // colour pulse after 25min (pomodoro)
+  if(total > 0 && Math.floor(total/60000) % 25 === 0 && Math.floor(total/1000) % 60 === 0){
+    swRing.style.stroke = 'var(--inorganic)';
+    setTimeout(()=>swRing.style.stroke='var(--organic)', 3000);
+  }
+  swRafId = requestAnimationFrame(swTick);
+}
+
+function swStart(){
+  if(swRunning) return;
+  swRunning = true;
+  swStart2 = Date.now();
+  swRafId = requestAnimationFrame(swTick);
+  swDisp.className = 'sw-display running';
+  document.getElementById('sw-start').disabled = true;
+  document.getElementById('sw-pause').disabled = false;
+  document.getElementById('sw-lap').disabled   = false;
+  document.getElementById('sw-stop').disabled  = false;
+}
+
+function swPause(){
+  if(!swRunning) return;
+  swElapsed += Date.now() - swStart2;
+  swRunning = false;
+  cancelAnimationFrame(swRafId);
+  swDisp.className = 'sw-display paused';
+  document.getElementById('sw-start').disabled = false;
+  document.getElementById('sw-start').textContent = '▶ RESUME';
+  document.getElementById('sw-pause').disabled = true;
+  document.getElementById('sw-lap').disabled   = true;
+}
+
+function swLap(){
+  const total = swElapsed + (Date.now() - swStart2);
+  const delta = total - lastLapAt;
+  lastLapAt = total;
+  laps.push({ num: laps.length+1, time: total, delta, name: swCurrentTask.title });
+  renderLaps();
+}
+
+function swStop(){
+  if(!swRunning && swElapsed === 0) return;
+  if(swRunning){ swElapsed += Date.now() - swStart2; swRunning = false; cancelAnimationFrame(swRafId); }
+  if(swElapsed < 3000){ alert('Session too short (< 3 seconds) — not saved.'); swReset(); return; }
+
+  // Save session
+  const session = {
+    id: Date.now(),
+    title: swCurrentTask.title,
+    tags: swCurrentTask.tags,
+    duration: swElapsed,
+    date: new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short'}),
+    time: new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'})
+  };
+  timerSessions.unshift(session);
+  try{ localStorage.setItem(TIMER_KEY, JSON.stringify(timerSessions)); }catch(e){}
+
+  renderSessions();
+  renderSubjectTotals();
+  swReset();
+}
+
+function swReset(){
+  swElapsed = 0; swRunning = false; swStart2 = null;
+  cancelAnimationFrame(swRafId);
+  swDisp.textContent = '00:00:00'; swDisp.className = 'sw-display';
+  swMs.textContent   = '.00';
+  swRing.style.strokeDashoffset = RING_C;
+  laps = []; lastLapAt = 0;
+  document.getElementById('sw-start').disabled = false;
+  document.getElementById('sw-start').textContent = '▶ START';
+  document.getElementById('sw-pause').disabled = true;
+  document.getElementById('sw-lap').disabled   = true;
+  document.getElementById('sw-stop').disabled  = true;
+  renderLaps();
+}
+
+function updateTimerTask(){
+  const sel = document.getElementById('timer-task-sel');
+  if(!sel.value){ swCurrentTask = {title:'Free Study Session', tags:['other']}; }
+  else {
+    const d = JSON.parse(sel.value);
+    swCurrentTask = { title: d.title, tags: d.tags };
+  }
+  swTaskN.textContent = swCurrentTask.title;
+  document.getElementById('timer-custom-note').value = '';
+}
+
+function applyCustomNote(){
+  const note = document.getElementById('timer-custom-note').value.trim();
+  if(!note) return;
+  swCurrentTask = { title: note, tags: ['other'] };
+  swTaskN.textContent = note;
+  document.getElementById('timer-task-sel').value = '';
+}
+
+// Tag → subject mapping
+function tagToSubject(tags){
+  if(!tags || !tags.length) return 'other';
+  if(tags.includes('physics')) return 'physics';
+  if(tags.includes('maths'))   return 'maths';
+  if(tags.includes('organic')) return 'organic';
+  if(tags.includes('inorganic')) return 'inorganic';
+  if(tags.includes('physical')) return 'physical';
+  return 'other';
+}
+
+function renderLaps(){
+  const el = document.getElementById('laps-list');
+  if(!laps.length){ el.innerHTML = '<div class="laps-empty">No laps yet — hit 🏁 LAP while running</div>'; return; }
+  el.innerHTML = [...laps].reverse().map(l=>`
+    <div class="lap-item">
+      <span class="lap-num">#${l.num}</span>
+      <span class="lap-name">${l.name}</span>
+      <span class="lap-time">${formatTime(l.time)}</span>
+      <span class="lap-delta">+${formatShort(l.delta)}</span>
+    </div>`).join('');
+}
+
+function renderSessions(){
+  const el = document.getElementById('session-list');
+  if(!timerSessions.length){
+    el.innerHTML = '<div class="session-empty">No sessions recorded yet.<br>Start the timer and stop it to log a session.</div>';
+    return;
+  }
+  const colors = {physics:'var(--physics)',maths:'var(--maths)',organic:'var(--organic)',inorganic:'var(--inorganic)',physical:'var(--physical)',other:'var(--text-dim)'};
+  el.innerHTML = timerSessions.slice(0,60).map(s=>{
+    const subj = tagToSubject(s.tags);
+    const col  = colors[subj] || 'var(--text-dim)';
+    return `<div class="session-item">
+      <div class="session-color" style="background:${col}"></div>
+      <div class="session-info">
+        <div class="session-name">${s.title}</div>
+        <div class="session-meta">${s.date} · ${s.time}</div>
+      </div>
+      <div class="session-dur">${formatShort(s.duration)}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderSubjectTotals(){
+  const today = new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short'});
+  const totals = {physics:0, maths:0, organic:0, inorganic:0, physical:0, other:0};
+  timerSessions.forEach(s=>{
+    if(s.date !== today) return;
+    const subj = tagToSubject(s.tags);
+    totals[subj] = (totals[subj]||0) + s.duration;
+  });
+  const totalMs = Object.values(totals).reduce((a,b)=>a+b,0);
+  const max = Math.max(...Object.values(totals), 1);
+  Object.entries(totals).forEach(([subj, ms])=>{
+    const bar = document.getElementById('stb-'+subj);
+    const lbl = document.getElementById('stt-'+subj);
+    if(bar) bar.style.width = (ms/max*100)+'%';
+    if(lbl) lbl.textContent = formatShort(ms);
+  });
+  // total
+  const h = Math.floor(totalMs/3600000);
+  const m = Math.floor((totalMs%3600000)/60000);
+  const s2 = Math.floor((totalMs%60000)/1000);
+  document.getElementById('stt-total').textContent =
+    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s2).padStart(2,'0')}`;
+}
+
+function clearSessions(){
+  if(!confirm('Clear all session history? This cannot be undone.')) return;
+  timerSessions = [];
+  try{ localStorage.removeItem(TIMER_KEY); }catch(e){}
+  renderSessions(); renderSubjectTotals();
+}
+
+// init timer tab on first switch
+populateTaskSelector();
+renderSessions();
+renderSubjectTotals();
 </script>
 <!-- PWA INSTALL BANNER -->
 <div id="install-banner">
